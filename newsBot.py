@@ -3,6 +3,20 @@ import praw
 import random
 import time
 import json
+import argparse
+
+parser = argparse.ArgumentParser(
+    prog="newsBot",
+    argument_default=argparse.SUPPRESS
+)
+parser.add_argument("-s","--subReddit", nargs='?', default="test")
+
+args = parser.parse_args()
+subRedditStr = args.subReddit
+print("Listening to [" + subRedditStr +"] subReddit")
+
+
+
 
 triggers_1 = ["test",
               "test 2"]
@@ -20,15 +34,16 @@ with open(credentials) as f:
     
 # Connecting your bot to your personal script app and logging in
 reddit = praw.Reddit(
-    client_id=creds['client_id2'],
-    client_secret=creds['client_secret2'],
-    username = creds['username'],
-    password = creds['password'],
+    client_id=creds['client_id'],
+    client_secret=creds['client_secret'],
+    # username = creds['username'],
+    # password = creds['password'],
     user_agent = creds['user_agent']
     )
 
 # Begins the comment stream, scans for new comments
-for comment in reddit.subreddit('test').stream.comments(skip_existing=True):
+#for comment in reddit.subreddit(subRedditStr).comments(limit=10):
+for comment in reddit.subreddit(subRedditStr).stream.comments(skip_existing=True):
     
     author_name = str(comment.author.name) # Fetch author name
     author_id = str(comment.author.id) # Fetch author id
