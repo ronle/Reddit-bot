@@ -97,6 +97,7 @@ with open("log.txt", "w") as log:
                     with open("testJSON2.json", "w") as f:
                         json.dump(data, f)
             
-            except Exception:
-                traceback.print_exc(file=log)
-                # carryOn = True
+            except Exception as e:
+                f = open('log.txt', 'w')
+                f.write('An exceptional thing happed - %s' % e)
+                f.close()
